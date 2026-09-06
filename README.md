@@ -4,7 +4,7 @@
 
 Prof. Dr. Dmitry Mikhaylov · Abu Dhabi Maritime Academy (AD Ports Group) · Kyrgyz National University
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22342668.svg)](https://doi.org/10.5281/zenodo.22342668)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22342668-1682D4)](https://doi.org/10.5281/zenodo.22342668)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0009--2108--6820-a6ce39)](https://orcid.org/0009-0009-2108-6820)
 
 ---
