@@ -4,6 +4,7 @@
 
 Prof. Dr. Dmitry Mikhaylov · Abu Dhabi Maritime Academy (AD Ports Group) · Kyrgyz National University
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22342668.svg)](https://doi.org/10.5281/zenodo.22342668)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0009--2108--6820-a6ce39)](https://orcid.org/0009-0009-2108-6820)
 
 ---
@@ -112,10 +113,20 @@ thermal, fluids, electromagnetics, mechanics — see my book *Physics-Informed N
 for Industrial Applications* (Springer). This course is about making the method converge; the
 book is about where to point it.
 
+Two applications of the same discipline to real problems:
+
+- [**oreforge**](https://github.com/drdmitrymikhaylov/oreforge) — ore-body modelling with a
+  PINN solving linear-elasticity equilibrium, inside a Qt/PyVista 3D workspace.
+- [**cough-spectrograms**](https://github.com/drdmitrymikhaylov/cough-spectrograms) — the
+  same reporting discipline applied to audio: cough detection and dry/wet cough typing on
+  open data, cross-validated, with the inter-rater ceiling measured and shown.
+
 ## Licence
 
 Code: MIT. Course text, slides and figures: CC BY 4.0.
 
 ## Citing
 
-A DOI is issued for each release via Zenodo. Please cite the version you used.
+A DOI is issued for each release via Zenodo. The badge above is the *concept* DOI — it
+always resolves to the latest version. To cite a specific one, use its own version DOI
+(v0.1 is [10.5281/zenodo.22342669](https://doi.org/10.5281/zenodo.22342669)).
