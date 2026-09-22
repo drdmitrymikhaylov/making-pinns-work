@@ -84,8 +84,41 @@ Three things worth noticing, and the second is not what the literature usually l
 3. At lambda = 1 the PDE loss is 0.4076; at lambda = 1000 it is 0.4435. The worse model has
    the lower loss. Module 08 is about what to watch instead.
 
+### Checking the numbers
+
+The five-seed table was quoted in the notebook but not produced by it. It now is:
+`scripts/02_five_seeds.py` re-runs the three weightings for seeds 1–5 (the seed sets the
+network initialisation; the collocation and boundary points are the notebook's fixed set)
+and writes every run to `results/02_five_seeds.json`. The re-run reproduces the table above
+to all four decimals — the training is deterministic on CPU. The ± column is the sample
+standard deviation over n = 5; errors are relative L2 on a 200 × 200 grid.
+
+| seed | equal weights | tuned constant | gradient-based | adaptive λ ended at |
+|---|---|---|---|---|
+| 1 | 0.4250 | 0.0097 | 0.0128 | 4332 |
+| 2 | 0.4301 | 0.0118 | **0.0089** | 5269 |
+| 3 | 0.3771 | 0.0106 | 0.0483 | 3880 |
+| 4 | 0.5791 | 0.0106 | 0.0394 | 3786 |
+| 5 | 0.2216 | 0.0097 | 0.0121 | 5080 |
+
+Read pair by pair, the second conclusion is narrower than the means suggest. The tuned
+constant beats the adaptive scheme on **4 of 5 seeds**, and on seed 2 it loses (0.0118
+against 0.0089). On three seeds the two are within 0.004 of each other; the 0.0243 mean is
+made by seeds 3 and 4, where annealing landed at 4–5 % error. So the adaptive scheme is not
+systematically worse — it is *occasionally* much worse, which is what the sd of 0.0182 was
+saying. Note also that annealing settles at λ ≈ 3800–5300, four to five times the tuned
+1000, and is no better for it: the basin of good constants is wide, and the two failures
+are not a wrong λ but a bad path to it.
+
+The "loss is not the error" point holds across all fifteen runs, not just the one in the
+notebook. Ranked by final PDE loss, the best of the fifteen is seed 5 with equal weights
+(loss 0.17) — a model with **22 % error**. The five tuned runs, all near 1 % error, sit at
+PDE losses of 0.30–0.60.
+
 Module 01 is checked against the exact Cole-Hopf solution, not against a plausible-looking
-plot. Where this course makes a claim, the notebook next to it reproduces the number.
+plot. Where this course makes a claim, the notebook next to it reproduces the number, and
+`tests/test_readme_numbers.py` pins every number on this page to the notebook outputs and
+the results file.
 
 ## Running the notebooks
 
@@ -115,11 +148,12 @@ book is about where to point it.
 
 Two applications of the same discipline to real problems:
 
-- [**oreforge**](https://github.com/drdmitrymikhaylov/oreforge) — ore-body modelling with a
-  PINN solving linear-elasticity equilibrium, inside a Qt/PyVista 3D workspace.
-- [**cough-spectrograms**](https://github.com/drdmitrymikhaylov/cough-spectrograms) — the
-  same reporting discipline applied to audio: cough detection and dry/wet cough typing on
-  open data, cross-validated, with the inter-rater ceiling measured and shown.
+- [**navierpinn-mineral-ore-body-reconstruction**](https://github.com/drdmitrymikhaylov/navierpinn-mineral-ore-body-reconstruction)
+  — ore-body modelling with a PINN solving linear-elasticity equilibrium, inside a
+  Qt/PyVista 3D workspace.
+- [**acousticpinn-cough-diagnosis**](https://github.com/drdmitrymikhaylov/acousticpinn-cough-diagnosis)
+  — the same reporting discipline applied to audio: cough detection and dry/wet cough typing
+  on open data, cross-validated, with the inter-rater ceiling measured and shown.
 
 ## Licence
 
