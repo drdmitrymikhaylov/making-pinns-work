@@ -28,6 +28,10 @@ can read the results without running anything.
 differs. Equal weights give 41% error; a tuned constant gives 1%. And the bad model has the
 **lower** equation loss. Judging a PINN by its training curve is how you ship it anyway.*
 
+## Who I built this for
+
+I teach physics-informed AI as a professor at Kyrgyz National University and at the Abu Dhabi Maritime Academy, and I have lectured as an invited speaker at the Fletcher School of Tufts University, the University of Sydney, City University of Hong Kong, Huazhong University of Science and Technology, the University of International Business and Economics in Beijing, Dankook University, Vietnam National University Ho Chi Minh City, COMSATS University Islamabad and Tashkent State Agrarian University. This course grew out of those lectures. It is built around the failures that stop most people, and it shows how to turn each one into a network that works. It is the companion to the Kyrgyz-language AI textbook published at KNU in 2026.
+
 ## Who this is for
 
 You can train an ordinary neural network in PyTorch and you know what a partial differential
