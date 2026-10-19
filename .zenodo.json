@@ -1,0 +1,22 @@
+{
+  "upload_type": "software",
+  "title": "Making PINNs Work: Why Physics-Informed Neural Networks Fail to Converge, and What to Do About It",
+  "description": "Why PINNs fail to converge, and what to do about it",
+  "creators": [
+    {
+      "name": "Mikhaylov, Dmitry",
+      "orcid": "0009-0009-2108-6820",
+      "affiliation": "Abu Dhabi Maritime Academy, AD Ports Group"
+    }
+  ],
+  "license": "mit",
+  "keywords": [
+    "lecture notes",
+    "partial differential equations",
+    "physics informed neural networks",
+    "pinn",
+    "pytorch",
+    "scientific machine learning"
+  ],
+  "access_right": "open"
+}
