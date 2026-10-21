@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "If you use this repository, please cite it as below."
 type: software
 title: "Making PINNs Work: Why Physics-Informed Neural Networks Fail to Converge, and What to Do About It"
+doi: "10.5281/zenodo.22342668"
 abstract: "Why PINNs fail to converge, and what to do about it"
 authors:
   - family-names: Mikhaylov
