@@ -1,5 +1,7 @@
 # Making PINNs Work
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22342668.svg)](https://doi.org/10.5281/zenodo.22342668)
+
 **A practical course on why physics-informed neural networks fail to converge — and what to do about it.**
 
 Prof. Dr. Dmitry Mikhaylov · Abu Dhabi Maritime Academy (AD Ports Group) · Kyrgyz National University
