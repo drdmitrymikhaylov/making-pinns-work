@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-10
+
+- Open-in-Colab badges for modules 01 and 02 (both notebooks need only torch, numpy and matplotlib); the second, duplicate DOI badge under the byline removed.
+
 ## 2026-10-09
 
 - Module 02, exercises 2 and 3 run instead of asserted: `scripts/02_lambda_basin.py` trains constant λ = 10 … 100 000 (nine values) and, per seed, λ fixed at the annealed endpoint, on seeds 1–5 (50 runs, `results/02_lambda_basin.json`, per-run files in `results/parts_basin/`). The λ = 1000 row, trained again, reproduces the 22 September runs bit for bit. Mean error 12.9 % / 4.6 % / 3.6 % / 1.6 % / **1.0 %** / 1.6 % / 4.2 % / 83 % / 100 % at λ = 10 / 30 / 100 / 300 / 1000 / 3000 / 10⁴ / 3·10⁴ / 10⁵; only 1000 is under 2 % on all five seeds, and at 10⁵ every seed returns the zero function. A constant at the annealed endpoint (3786–5269) gives 3.1 % against 2.4 % annealed and 1.0 % tuned: 4.6 times worse than annealing on seed 1, better than it on the two seeds where annealing failed. **Correction:** "the basin of good constants is wide" and "the two failures are not a wrong λ but a bad path to it" were written on 22 September without a run behind them; the basin is about a decade wide, and on the failing seeds both the λ and the path are at fault. New README section "Exercises 2 and 3, run"; `tests/test_lambda_basin.py` (8 tests).

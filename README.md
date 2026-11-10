@@ -6,7 +6,7 @@
 
 Prof. Dr. Dmitry Mikhaylov · Abu Dhabi Maritime Academy (AD Ports Group) · Kyrgyz National University
 
-[![DOI](https://img.shields.io/static/v1?label=DOI&message=10.5281%2Fzenodo.22342668&color=1682D4)](https://doi.org/10.5281/zenodo.22342668)
+[![Open module 01 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdmitrymikhaylov/making-pinns-work/blob/main/01_burgers_from_scratch.ipynb) [![Open module 02 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdmitrymikhaylov/making-pinns-work/blob/main/02_loss_balancing.ipynb)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0009--2108--6820-a6ce39)](https://orcid.org/0009-0009-2108-6820)
 
 ---
