@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-16
+
+- **Correction to module 02: the five-seed headline does not hold on twenty seeds.** `scripts/02_twenty_seeds.py` trains seeds 6–20 with the unchanged training loop (per-seed files in `results/parts_twenty/`, merged with seeds 1–5 into `results/02_twenty_seeds.json`; seed 1 trained again as a control and identical). Over twenty seeds: equal weights 38.6 % ± 12.8, tuned constant λ = 1000 2.56 % ± 1.87, gradient-based annealing 1.66 % ± 1.05. The tuned constant, 1.05 % ± 0.09 on seeds 1–5, is between 2 % and 7.3 % on ten of the next fifteen; it is under 2 % on 10 seeds of 20 against 17 of 20 for annealing. Annealing wins on 13 seeds of 20 (sign test p = 0.26), so twenty seeds do not separate the two on error, but the claim "a tuned constant beats the adaptive scheme and is twenty times more repeatable" is withdrawn. "The loss is not the error" holds over all sixty runs: the lowest PDE loss (0.09) belongs to a model with 21 % error. README: correction note and twenty-seed table at the top of Module 02, the five-seed table moved under "Per-seed check", new section "Twenty seeds", a note on "Exercises 2 and 3, run" that the basin was measured on seeds 1–5 only. Notebook 02: the "one run proves nothing" text and table updated (markdown only, outputs untouched). `tests/test_twenty_seeds.py` (10 tests).
+
 ## 2026-11-10
 
 - Open-in-Colab badges for modules 01 and 02 (both notebooks need only torch, numpy and matplotlib); the second, duplicate DOI badge under the byline removed.

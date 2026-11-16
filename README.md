@@ -27,7 +27,8 @@ can read the results without running anything.
 ![Loss weighting on the Helmholtz benchmark](02_loss_balancing.png)
 
 *Module 02. Same network, same data, same budget — only the weight on the boundary term
-differs. Equal weights give 41% error; a tuned constant gives 1%. And the bad model has the
+differs. Equal weights give about 40% error; a sensible weight gives 1 to 3%. And the bad
+model has the
 **lower** equation loss. Judging a PINN by its training curve is how you ship it anyway.*
 
 ## Who I built this for
@@ -78,26 +79,47 @@ plot.
 
 ## Module 02 — the loss is not the error
 
-Five seeds on the Helmholtz benchmark, with the constant weight tuned on a held-out seed
-first:
+**Correction, 16 November 2026.** Until today this section said that a tuned constant weight
+beats the adaptive scheme and is twenty times more repeatable. That came from five seeds. On
+twenty seeds it does not hold. The five-seed table is kept under
+[Per-seed check](#per-seed-check) exactly as it was run, and [Twenty seeds](#twenty-seeds) has
+the new runs.
+
+Twenty seeds on the Helmholtz benchmark. The constant weight was tuned on a held-out seed
+before any of these runs:
+
+| weighting of the boundary term | mean rel. L2 error | sd | min | max | seeds under 2 % |
+|---|---|---|---|---|---|
+| equal weights (λ = 1) | 0.3863 | 0.1282 | 0.2081 | 0.7364 | 0 of 20 |
+| tuned constant (λ = 1000) | 0.0256 | 0.0187 | 0.0095 | 0.0731 | 10 of 20 |
+| gradient-based annealing | 0.0166 | 0.0105 | 0.0058 | 0.0483 | 17 of 20 |
+
+Three things are worth noticing.
+
+1. One scalar moves the error from 39% to 2 or 3%, everything else held fixed. Any sensible
+   weight, constant or adaptive, is worth a factor of fifteen or more. The weighting is the
+   dominant hyperparameter.
+2. **Five seeds picked a winner that twenty do not confirm.** On seeds 1 to 5 the tuned
+   constant gave 1.05% ± 0.09 and beat annealing on four seeds of five. On twenty seeds
+   annealing has the lower mean and wins on 13. That difference is not established either: a
+   sign test on 13 of 20 gives p = 0.26. What twenty seeds do show is that the constant is
+   far less repeatable than five seeds suggested.
+3. On seed 1, at lambda = 1 the PDE loss is 0.4076; at lambda = 1000 it is 0.4435. The worse
+   model has the lower loss. Module 08 is about what to watch instead.
+
+## Per-seed check
+
+This section is about seeds 1 to 5. It is kept as written on 22 September 2026 because the
+sections after it refer to it. Read it with [Twenty seeds](#twenty-seeds): on these five
+seeds the constant weight happened to behave well every time.
+
+The five-seed summary, as first published:
 
 | weighting of the boundary term | mean rel. L2 error | sd |
 |---|---|---|
 | equal weights, lambda = 1 | 0.4066 | 0.1282 |
 | tuned constant, lambda = 1000 | **0.0105** | **0.0009** |
 | gradient-based (annealing) | 0.0243 | 0.0182 |
-
-Three things are worth noticing. The second is not what the literature usually leads with.
-
-1. One scalar moves the error from 41% to 1%, everything else held fixed. The weighting is
-   the dominant hyperparameter.
-2. A **tuned constant beats the adaptive scheme** here, and is twenty times more repeatable.
-   What gradient-based weighting can fairly claim is not accuracy. It is that it lands in
-   the right regime without a sweep.
-3. At lambda = 1 the PDE loss is 0.4076; at lambda = 1000 it is 0.4435. The worse model has
-   the lower loss. Module 08 is about what to watch instead.
-
-## Per-seed check
 
 The five-seed table was quoted in the notebook but not produced by it. It now is.
 `scripts/02_five_seeds.py` re-runs the three weightings for seeds 1 to 5 and writes every
@@ -115,7 +137,8 @@ grid.
 | 4 | 0.5791 | 0.0106 | 0.0394 | 3786 |
 | 5 | 0.2216 | 0.0097 | 0.0121 | 5080 |
 
-Taken pair by pair, the second conclusion is narrower than the means suggest. The tuned
+Taken pair by pair, the five-seed conclusion (a tuned constant beats the adaptive scheme) is
+narrower than the means suggest. The tuned
 constant beats the adaptive scheme on **4 of 5 seeds**. On seed 2 it loses (0.0118 against
 0.0089). On three seeds the two are within 0.004 of each other. The 0.0243 mean is made by
 seeds 3 and 4, where annealing landed at 4 to 5 % error. So the adaptive scheme is not
@@ -135,6 +158,53 @@ Where this course makes a claim, the notebook next to it reproduces the number, 
 `tests/test_readme_numbers.py` pins every number on this page to the notebook outputs and
 the results file.
 
+## Twenty seeds
+
+Five seeds is a small sample. The caveat under the basin runs below already said that the
+4-of-5 rows could be 5-of-5 or 3-of-5 on another five. On 16 November 2026 I ran fifteen more.
+`scripts/02_twenty_seeds.py` trains seeds 6 to 20 with the training loop imported unchanged
+from `scripts/02_five_seeds.py`, keeps one file per seed in `results/parts_twenty/` and merges
+them with the first five into `results/02_twenty_seeds.json`. Seed 1 was trained again as a
+control and reproduces the stored run exactly.
+
+| seed | equal weights | tuned constant | gradient-based | adaptive λ ended at |
+|---|---|---|---|---|
+| 6 | 0.2081 | 0.0095 | 0.0113 | 2866 |
+| 7 | 0.7364 | 0.0151 | 0.0126 | 6199 |
+| 8 | 0.4418 | 0.0298 | 0.0256 | 4909 |
+| 9 | 0.3522 | 0.0129 | 0.0181 | 5437 |
+| 10 | 0.4845 | 0.0203 | 0.0170 | 4653 |
+| 11 | 0.2551 | 0.0223 | 0.0074 | 4282 |
+| 12 | 0.3734 | 0.0104 | 0.0089 | 3473 |
+| 13 | 0.3194 | 0.0385 | 0.0151 | 5361 |
+| 14 | 0.4331 | 0.0599 | 0.0098 | 4651 |
+| 15 | 0.4689 | 0.0272 | 0.0154 | 4688 |
+| 16 | 0.4213 | 0.0486 | 0.0174 | 5655 |
+| 17 | 0.2380 | 0.0731 | 0.0058 | 3146 |
+| 18 | 0.3136 | 0.0134 | 0.0189 | 5316 |
+| 19 | 0.3914 | 0.0343 | 0.0137 | 5081 |
+| 20 | 0.2557 | 0.0444 | 0.0137 | 4562 |
+
+- **The tuned constant is not repeatable.** Seeds 1 to 5 gave 0.0097 to 0.0118. Of the next
+  fifteen seeds, five are under 1.6% and ten are between 2% and 7.3%. The sd over twenty seeds
+  is 0.0187, not 0.0009.
+- **Annealing looked worse on five seeds than it is.** It ends above 2% on three seeds of
+  twenty (3, 4 and 8), and two of those fell in the first five. On seeds 6 to 20 it gives
+  1.40% ± 0.51. It is under 2% on 17 seeds of 20, against 10 of 20 for the constant.
+- **Pair by pair, annealing wins on 13 seeds of 20.** The mean difference, constant minus
+  annealing, is +0.0090 ± 0.0241. A two-sided sign test gives p = 0.26. Twenty seeds do not
+  separate the two on error. They do retire the claim that the constant is better.
+- **The loss is still not the error.** Of all sixty runs, the lowest PDE loss belongs to seed
+  6 with equal weights: loss 0.09, error 21%. The twenty tuned runs sit at PDE losses of 0.17
+  to 5.4.
+- Annealing ends at λ = 2866 to 6199 over the twenty seeds.
+
+**What this does not show.** It is the same single problem, network and budget as before.
+λ = 1000 was chosen on one held-out seed. A constant chosen on twenty seeds may do better, and
+the basin in the next section was measured on seeds 1 to 5 only. Why the first five seeds all
+landed where the constant works is not explained here. `tests/test_twenty_seeds.py` pins this
+section and the table at the top of Module 02 to the results file.
+
 ## Exercises 2 and 3, run
 
 The notebook leaves two questions to the reader. Exercise 2 asks how wide the basin of good
@@ -144,6 +214,11 @@ annealing ended at. The section above answered both in a sentence each without r
 imported from `scripts/02_five_seeds.py`. That is 50 runs, done on 9 October 2026, all kept in
 `results/02_lambda_basin.json`. The λ = 1000 row was trained again as a control and reproduces
 the 22 September runs bit for bit. The λ = 1 row is the stored one.
+
+**Note, 16 November 2026.** Everything in this section was run on seeds 1 to 5. On those
+seeds λ = 1000 happens to behave well every time ([Twenty seeds](#twenty-seeds)), so the
+statements below that put the tuned constant ahead describe these five seeds only. The sweep
+has not been repeated on seeds 6 to 20.
 
 | constant λ | mean rel. L2 error | sd | min | max | seeds under 2 % |
 |---|---|---|---|---|---|
@@ -224,6 +299,11 @@ the credit went to the adaptive scheme when most of the gain comes from having a
 sensible λ. I re-ran it on 4 September 2026 on a laptop CPU, PyTorch 2.9.1: a sweep
 of the constant weight on a held-out seed (99), then five seeds for each of the three
 weightings. The tables above are what came out, and the conclusion changed.
+
+It changed a second time on 16 November 2026. The five-seed result said that a tuned
+constant beats annealing. Fifteen more seeds did not confirm it; see
+[Twenty seeds](#twenty-seeds). The lesson of this page applies to its own second version:
+five seeds were not enough.
 
 Two smaller corrections from the same pass. Module 01 in v0.1 checked only the residual and
 whether a shock appeared; it is now measured against the closed-form Cole-Hopf solution.
